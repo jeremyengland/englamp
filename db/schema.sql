@@ -17,6 +17,7 @@ CREATE TABLE users (
 CREATE TABLE albums (
   id SERIAL NOT NULL,
   user INT NOT NULL,
+  type VARCHAR(15),
   title VARCHAR(50),
   genre VARCHAR(20),
   artists VARCHAR(30)[],

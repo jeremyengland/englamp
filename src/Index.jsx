@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Audio from './components/Audio.jsx'
-
-const title = 'React with Webpack and Babel';
+import Audio from './components/Audio.jsx';
+import Login from './components/Login.jsx';
 
 ReactDOM.render(
-  <Audio></Audio>,
+  <Login></Login>,
   document.getElementById('app')
 );
