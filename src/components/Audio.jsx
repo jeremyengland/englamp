@@ -1,4 +1,3 @@
-import ReactPlayer from 'react-player/youtube';
 import React from 'react';
 
 export default class Audio extends React.Component {
@@ -9,7 +8,7 @@ export default class Audio extends React.Component {
   render() {
     return (
       <div>
-        <h1>What Up?</h1>
+        <h1>Writevibe</h1>
       </div>
     )
   }

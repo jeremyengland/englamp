@@ -1,8 +1,8 @@
-# englamp
+# writevibe
 
 ## Welcome
 
-This application allows for audio visualization by utilizing
+This application helps artists organize their written songs into albums, EPs, mixtapes, or singles. Users can also store demos, stems, and released tracks to their profile.
 
 ## Getting Started
 
