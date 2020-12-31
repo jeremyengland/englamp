@@ -1,13 +1,13 @@
 const express = require('express');
-const app = express()
-const port = 2112
+const bodyparser = require('body-parser');
+const exRouter = require('./router.js');
+const app = express();
+const port = 2112;
 
-app.use(express.static('dist'));
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
+app.use(bodyparser.json());
+app.use(express.json());
+app.use('/', exRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Writevibe listening at http://localhost:${port}`)
 });
