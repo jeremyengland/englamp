@@ -51,11 +51,12 @@ CREATE TABLE sections (
 
 CREATE TABLE lines (
   id SERIAL NOT NULL,
-  song INT NOT NULL,
+  section INT NOT NULL,
+  order INT NOT NULL,
   line VARCHAR(75),
-  INDEX(song)
-  FOREIGN KEY(song)
-  REFERENCES songs(id)
+  INDEX(section)
+  FOREIGN KEY(section)
+  REFERENCES sections(id)
 )
 
 CREATE TABLE demos (
