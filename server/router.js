@@ -83,10 +83,10 @@ router.post('/api/users/:userid/albums', (req, res) => {
 //- ROUTES FOR SONG API BELOW -//
 
 // route for getting songs for a user
-router.get('/api/users/:userid/songs', async (req, res) => {
-  const { userid } = req.params;
+router.get('/api/albums/:albumid/songs', async (req, res) => {
+  const { albumid } = req.params;
   try {
-    let songs = await getSongs(userid);
+    let songs = await getSongs(albumid);
     res.send(songs).status(200);
   } catch (err) {
     console.error(err);
@@ -96,10 +96,10 @@ router.get('/api/users/:userid/songs', async (req, res) => {
 });
 
 // route for posting a single song
-router.post('/api/users/:userid/songs', (req, res) => {
-  const { userid } = req.params;
+router.post('/api/albums/:albumid/songs', (req, res) => {
+  const { albumid } = req.params;
   try {
-    let post = postSong(userid, req.body);
+    let post = postSong(albumid, req.body);
     res.status(200);
     res.end();
   } catch (err) {
