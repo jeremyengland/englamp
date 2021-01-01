@@ -27,7 +27,9 @@ router.get('/check-pulse', (req, res) => res.send('thanks, doc').status(200));
 // route for getting a single user
 router.get('/api/users', async (req, res) => {
   try {
-    let user = await getUser(req.body);
+    const email = req.query.email;
+    const password = req.query.password;
+    let user = await getUser({email: email, password: password});
     res.send(user).status(200);
   } catch (err) {
     console.error(err);
@@ -138,7 +140,7 @@ router.post('/api/songs/:songid/sections', (req, res) => {
 
 //- ROUTES FOR LINE API BELOW -//
 
-// route for getting sections for a song
+// route for getting lines for a section
 router.get('/api/sections/:secid/lines', async (req, res) => {
   const { secid } = req.params;
   try {
@@ -151,7 +153,7 @@ router.get('/api/sections/:secid/lines', async (req, res) => {
   }
 });
 
-// route for posting a single section
+// route for posting a single line
 router.post('/api/sections/:secid/lines', (req, res) => {
   const { secid } = req.params;
   try {
@@ -171,8 +173,8 @@ router.post('/api/sections/:secid/lines', (req, res) => {
 router.get('/api/songs/:songid/demos', async (req, res) => {
   const { songid } = req.params;
   try {
-    let lines = await getDemos(songid);
-    res.send(lines).status(200);
+    let demos = await getDemos(songid);
+    res.send(demos).status(200);
   } catch (err) {
     console.error(err);
     res.status(404);
@@ -180,7 +182,7 @@ router.get('/api/songs/:songid/demos', async (req, res) => {
   }
 });
 
-// route for posting a single section
+// route for posting a single demo
 router.post('/api/songs/:songid/demos', (req, res) => {
   const { songid } = req.params;
   try {
