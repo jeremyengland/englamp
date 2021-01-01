@@ -10,4 +10,4 @@ const postLine = async (id, line) => {
   }
 }
 
-module.exports = postSection;
+module.exports = postLine;
