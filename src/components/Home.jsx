@@ -11,6 +11,7 @@ export default class Home extends React.Component {
       albums: null
     };
     this.getAlbums = this.getAlbums.bind(this);
+    this.getSongs = this.getSongs.bind(this);
   }
 
   // sends request to get a user's albums
@@ -28,6 +29,21 @@ export default class Home extends React.Component {
       })
   }
 
+  // sends a request to get a user's songs
+  getSongs(albumId) {
+    axios({
+      method: 'get',
+      url: `/api/albums/${albumId}/songs`,
+    })
+      .then((res) => {
+        this.setState({ songs: res.data });
+        console.log(res);
+        console.log('successfully grabbed songs');
+      }, (err) => {
+        console.log(err);
+      })
+  }
+
   componentDidMount() {
     this.getAlbums();
   }
@@ -37,7 +53,7 @@ export default class Home extends React.Component {
       this.state.albums &&
       <div>
         <h3>Your Projects:</h3>
-        <AlbumList albums={this.state.albums}></AlbumList>
+        <AlbumList albums={this.state.albums} getSongs={this.getSongs}></AlbumList>
       </div>
     )
   }
