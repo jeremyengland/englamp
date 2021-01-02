@@ -8,7 +8,8 @@ export default class Home extends React.Component {
     this.state = {
       currentUser: this.props.currentUser,
       userId: this.props.userId,
-      albums: null
+      albums: null,
+      songs: null
     };
     this.getAlbums = this.getAlbums.bind(this);
     this.getSongs = this.getSongs.bind(this);
@@ -50,10 +51,13 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      this.state.albums &&
       <div>
-        <h3>Your Projects:</h3>
-        <AlbumList albums={this.state.albums} getSongs={this.getSongs}></AlbumList>
+        {this.state.albums && !this.state.songs &&
+          <div>
+            <h3>Your Projects:</h3>
+            <AlbumList albums={this.state.albums} getSongs={this.getSongs} songs={this.state.songs}></AlbumList>
+          </div>
+        }
       </div>
     )
   }

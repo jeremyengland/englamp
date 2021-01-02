@@ -7,14 +7,17 @@ export default class AlbumList extends React.Component {
     super(props);
     this.state = {
       albums: this.props.albums,
-      albumObject: null
+      albumObject: null,
+      songs: this.props.songs
     };
+    this.onAlbumClick = this.onAlbumClick.bind(this);
   }
 
-  // // grab all songs for the album on click
-  // onAlbumClick() {
-
-  // }
+  // grab all songs for the album on click
+  onAlbumClick(e, data) {
+    // console.log(e.target.innerHTML);
+    this.props.getSongs(this.state.albumObject[e.target.innerHTML].id);
+  }
 
   componentDidMount() {
     if (typeof this.state.albums === 'object') {
@@ -25,18 +28,22 @@ export default class AlbumList extends React.Component {
         }
       })
     }
+    console.log('current songs: ', this.state.songs);
   }
 
   render() {
-    return (<div>
-      {this.state.albums && this.state.albumObject && this.state.albums.map((album) => (
-        <div>
-          <h4>Title: {this.state.albumObject[album].title}</h4>
-          <p>{this.state.albumObject[album].type}</p>
-          <p>{this.state.albumObject[album].genre}</p>
-          <p>{this.state.albumObject[album].bio}</p>
-        </div>
-      ))}
-    </div>);
+    return (
+      <div>
+        {this.state.albums && this.state.albumObject && this.state.albums.map((album) => (
+          <div>
+            <div onClick={this.onAlbumClick}>
+              <h4>{this.state.albumObject[album].title}</h4>
+            </div>
+            <p>{this.state.albumObject[album].type}</p>
+            <p>{this.state.albumObject[album].genre}</p>
+            <p>{this.state.albumObject[album].bio}</p>
+          </div>
+        ))}
+      </div>);
   }
 }
