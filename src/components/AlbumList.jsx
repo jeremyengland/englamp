@@ -16,7 +16,8 @@ export default class AlbumList extends React.Component {
   // grab all songs for the album on click
   onAlbumClick(e, data) {
     // console.log(e.target.innerHTML);
-    this.props.getSongs(this.state.albumObject[e.target.innerHTML].id);
+    let albumName = e.target.innerHTML;
+    this.props.getSongs(this.state.albumObject[albumName].id, albumName);
   }
 
   componentDidMount() {
@@ -44,6 +45,7 @@ export default class AlbumList extends React.Component {
             <p>{this.state.albumObject[album].bio}</p>
           </div>
         ))}
-      </div>);
+      </div>
+    );
   }
 }
