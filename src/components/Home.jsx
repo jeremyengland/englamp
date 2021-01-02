@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import AlbumList from './AlbumList.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export default class Home extends React.Component {
       this.state.albums &&
       <div>
         <h3>Your Projects:</h3>
-        <p>{this.state.albums[0].title}</p>
+        <AlbumList albums={this.state.albums}></AlbumList>
       </div>
     )
   }
