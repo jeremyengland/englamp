@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import AlbumList from './AlbumList.jsx';
 import SongList from './SongList.jsx';
+import SongView from './SongView.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ export default class Home extends React.Component {
     this.getSongs = this.getSongs.bind(this);
     this.getSections = this.getSections.bind(this);
     this.getLines = this.getLines.bind(this);
+    this.updateLineState = this.updateLineState.bind(this);
   }
 
   // sends request to get a user's albums
@@ -77,19 +79,18 @@ export default class Home extends React.Component {
 
   // sends a request to get a section's lines
   getLines(sectionId) {
-    axios({
+    return axios({
       method: 'get',
-      url: `/api/songs/${songId}/sections`,
+      url: `/api/sections/${sectionId}/lines`,
     })
-      .then((res) => {
-        this.setState({
-          lines: res.data
-        });
-        console.log(res);
-        console.log('successfully grabbed lines');
-      }, (err) => {
-        console.log(err);
-      })
+  }
+
+  // changes state for lines
+  updateLineState(lines) {
+    console.log(lines);
+    this.setState({
+      lines: lines
+    })
   }
 
   componentDidMount() {
@@ -102,13 +103,19 @@ export default class Home extends React.Component {
         {this.state.albums && !this.state.songs &&
           <div>
             <h3>Your Projects:</h3>
-            <AlbumList albums={this.state.albums} getSongs={this.getSongs} songs={this.state.songs}></AlbumList>
+            <AlbumList albums={this.state.albums} songs={this.state.songs} getSongs={this.getSongs}></AlbumList>
           </div>
         }
         {this.state.songs && !this.state.sections &&
           <div>
             <h3>{this.state.currentAlbum}</h3>
             <SongList songs={this.state.songs} getSections={this.getSections}></SongList>
+          </div>
+        }
+        {this.state.sections &&
+          <div>
+            <h3>{this.state.currentSong}</h3>
+            <SongView sections={this.state.sections} lines={this.state.lines} getLines={this.getLines} updateLineState={this.updateLineState}></SongView>
           </div>
         }
       </div>
