@@ -12,17 +12,21 @@ export default class Home extends React.Component {
       userId: this.props.userId,
       albums: null,
       currentAlbum: null,
+      albumId: null,
       songs: null,
       currentSong: null,
+      songId: null,
       sections: null,
       currentSection: null,
       lines: null,
-      currentLine: null
+      currentLine: null,
+      demos: null
     };
     this.getAlbums = this.getAlbums.bind(this);
     this.getSongs = this.getSongs.bind(this);
     this.getSections = this.getSections.bind(this);
     this.getLines = this.getLines.bind(this);
+    this.getDemos = this.getDemos.bind(this);
     this.updateLineState = this.updateLineState.bind(this);
     this.backToAlbums = this.backToAlbums.bind(this);
     this.backToSongs = this.backToSongs.bind(this);
@@ -52,6 +56,7 @@ export default class Home extends React.Component {
       .then((res) => {
         this.setState({
           currentAlbum: title,
+          albumId: albumId,
           songs: res.data
         });
         console.log(res);
@@ -70,6 +75,7 @@ export default class Home extends React.Component {
       .then((res) => {
         this.setState({
           currentSong: title,
+          songId: songId,
           sections: res.data
         });
         console.log(res);
@@ -84,6 +90,14 @@ export default class Home extends React.Component {
     return axios({
       method: 'get',
       url: `/api/sections/${sectionId}/lines`,
+    })
+  }
+
+  // sends a request to get a song's demos
+  getDemos(songId) {
+    return axios({
+      method: 'get',
+      url: `/api/songs/${songId}/demos`,
     })
   }
 
@@ -144,7 +158,7 @@ export default class Home extends React.Component {
             <button onClick={this.backToAlbums}>Projects</button>
             <button onClick={this.backToSongs}>Songs</button>
             <h3>{this.state.currentSong}</h3>
-            <SongView sections={this.state.sections} lines={this.state.lines} getLines={this.getLines} updateLineState={this.updateLineState}></SongView>
+            <SongView sections={this.state.sections} lines={this.state.lines} demos={this.state.demos} getLines={this.getLines} updateLineState={this.updateLineState} getDemos={this.getDemos} songId={this.state.songId} ></SongView>
           </div>
         }
       </div>

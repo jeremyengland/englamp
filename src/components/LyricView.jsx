@@ -12,14 +12,15 @@ export default class LyricView extends React.Component {
 
   componentDidMount() {
     let allLines = [];
-    // console.log(this.state.sections);
+    // the promise for a get request for lines is resolved here,
+    // so this component can store the data as the requests are made
     this.state.sections.forEach(async (section) => {
       await this.props.getLines(section.id).then((res) => {
         allLines.push(res.data);
-        // console.log('successfully grabbed lines for section at id ', section.id);
       }, (err) => {
         console.log(err);
       });
+      // after all lines are in an array, add it to state
       this.setState({
         lines: allLines
       })
