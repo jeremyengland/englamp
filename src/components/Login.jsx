@@ -32,7 +32,9 @@ export default class Login extends React.Component {
           userId: res.data.id
         });
         console.log(res);
-        console.log('successfully logged in');
+        if (res.data == "incorrect email/password combination") {
+          alert("Incorrect email/password combination! 😥\nTry again please.")
+        }
       }, (err) => {
         console.log(err);
       })
@@ -47,7 +49,6 @@ export default class Login extends React.Component {
       currentUser: null,
       userId: null
     })
-    console.log('logged out')
   }
 
   // changes username stored in state
@@ -73,7 +74,7 @@ export default class Login extends React.Component {
           <div>
             <h3>Login</h3>
             <form onSubmit={this.attemptLogin}>
-              <label>Username</label>
+              <label>Email</label>
               <input type="text" data-test="username" value={this.state.email} onChange={this.handleEmailChange} />
               <label>Password</label>
               <input type="password" data-test="password" value={this.state.password} onChange={this.handlePasswordChange} />
