@@ -24,6 +24,8 @@ export default class Home extends React.Component {
     this.getSections = this.getSections.bind(this);
     this.getLines = this.getLines.bind(this);
     this.updateLineState = this.updateLineState.bind(this);
+    this.backToAlbums = this.backToAlbums.bind(this);
+    this.backToSongs = this.backToSongs.bind(this);
   }
 
   // sends request to get a user's albums
@@ -93,6 +95,30 @@ export default class Home extends React.Component {
     })
   }
 
+  // rerenders the album list component
+  backToAlbums() {
+    this.setState({
+      currentAlbum: null,
+      songs: null,
+      currentSong: null,
+      sections: null,
+      currentSection: null,
+      lines: null,
+      currentLine: null
+    })
+  }
+
+  // rerenders the song list component
+  backToSongs() {
+    this.setState({
+      currentSong: null,
+      sections: null,
+      currentSection: null,
+      lines: null,
+      currentLine: null
+    })
+  }
+
   componentDidMount() {
     this.getAlbums();
   }
@@ -108,12 +134,15 @@ export default class Home extends React.Component {
         }
         {this.state.songs && !this.state.sections &&
           <div>
+            <button onClick={this.backToAlbums}>Projects</button>
             <h3>{this.state.currentAlbum}</h3>
             <SongList songs={this.state.songs} getSections={this.getSections}></SongList>
           </div>
         }
         {this.state.sections &&
           <div>
+            <button onClick={this.backToAlbums}>Projects</button>
+            <button onClick={this.backToSongs}>Songs</button>
             <h3>{this.state.currentSong}</h3>
             <SongView sections={this.state.sections} lines={this.state.lines} getLines={this.getLines} updateLineState={this.updateLineState}></SongView>
           </div>

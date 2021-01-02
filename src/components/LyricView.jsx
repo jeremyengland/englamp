@@ -1,4 +1,5 @@
 import React from 'react';
+import Sections from './Sections.jsx';
 
 export default class LyricView extends React.Component {
   constructor(props) {
@@ -11,11 +12,11 @@ export default class LyricView extends React.Component {
 
   componentDidMount() {
     let allLines = [];
-    console.log(this.state.sections);
+    // console.log(this.state.sections);
     this.state.sections.forEach(async (section) => {
       await this.props.getLines(section.id).then((res) => {
-        res.data.forEach((line) => allLines.push(line));
-        console.log('successfully grabbed lines for section at id ', section.id);
+        allLines.push(res.data);
+        // console.log('successfully grabbed lines for section at id ', section.id);
       }, (err) => {
         console.log(err);
       });
@@ -28,7 +29,15 @@ export default class LyricView extends React.Component {
 
   render() {
     return (
-      <p>{JSON.stringify(this.state.lines)}</p>
+      this.state.lines &&
+      <div>
+        {this.state.lines.map((section) => (
+          <div>
+            <Sections lines={section}></Sections>
+            <p><br></br></p>
+          </div>
+        ))}
+      </div>
     )
   }
 }
