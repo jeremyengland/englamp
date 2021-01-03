@@ -10,4 +10,4 @@ const updateSection = async (id, line, column) => {
   }
 }
 
-module.exports = updateLine;
+module.exports = updateSection;

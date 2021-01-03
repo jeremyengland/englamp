@@ -1,6 +1,7 @@
 import React from 'react';
 import Lines from './Lines.jsx';
 import LineEditor from './LineEditor.jsx';
+import sortLines from './utils/sortLines.js';
 
 export default class LyricView extends React.Component {
   constructor(props) {
@@ -11,12 +12,14 @@ export default class LyricView extends React.Component {
       lineObject: null,
       sectionIdsAndOrders: null,
       currentSectionOrder: null,
-      currentLineOrder: null
+      currentLineOrder: null,
+      postedLine: null
     };
     this.selectLine = this.selectLine.bind(this);
+    this.updateAfterPost = this.updateAfterPost.bind(this);
   }
 
-  componentDidMount() {
+  updateAfterPost(newLine, newOrder, section) {
     let allSections = {};
     let idsAndOrders = {};
     let allLines = [];
@@ -35,6 +38,7 @@ export default class LyricView extends React.Component {
           lines[section.sectionorder][line.lineorder] = line;
         })
         allLines.push(res.data);
+        allLines = sortLines(allLines);
       }, (err) => {
         console.log(err);
       });
@@ -47,6 +51,10 @@ export default class LyricView extends React.Component {
       })
     })
     this.props.updateLineState(allLines);
+  }
+
+  componentWillMount() {
+    this.updateAfterPost();
   }
 
   selectLine(e) {
@@ -68,9 +76,9 @@ export default class LyricView extends React.Component {
             <p><br></br></p>
           </div>
         ))}
-        {this.state.currentLineOrder && this.state.lineObject &&
+        {this.state.currentLineOrder && this.state.currentSectionOrder && this.state.lineObject &&
           <div>
-            <LineEditor postLine={this.props.postLine} selectedLine={this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder]}></LineEditor>
+            <LineEditor postLine={this.props.postLine} selectedLine={this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder]} songId={this.props.songId} updateAfterPost={this.updateAfterPost} postedLine={this.state.postedLine}></LineEditor>
             <p><b>Current Section:</b> {this.state.sections[this.state.sectionIdsAndOrders[this.state.currentSectionOrder]].section} <b>[{this.state.currentSectionOrder}]</b></p>
             <p><b>Current Line:</b> {this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder].linecontent} <b>[{this.state.currentLineOrder}]</b></p>
           </div>

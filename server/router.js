@@ -154,12 +154,11 @@ router.get('/api/sections/:secid/lines', async (req, res) => {
 });
 
 // route for posting a single line
-router.post('/api/sections/:secid/lines', (req, res) => {
+router.post('/api/sections/:secid/lines', async (req, res) => {
   const { secid } = req.params;
   try {
-    let post = postLine(secid, req.body);
-    res.status(200);
-    res.end();
+    let post = await postLine(secid, req.body);
+    res.send(post).status(200);
   } catch (err) {
     console.error(err);
     res.status(404);

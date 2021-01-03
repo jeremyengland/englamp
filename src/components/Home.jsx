@@ -25,7 +25,6 @@ export default class Home extends React.Component {
     this.getSongs = this.getSongs.bind(this);
     this.getSections = this.getSections.bind(this);
     this.getLines = this.getLines.bind(this);
-    this.postLine = this.postLine.bind(this);
     this.getDemos = this.getDemos.bind(this);
     this.updateLineState = this.updateLineState.bind(this);
     this.backToAlbums = this.backToAlbums.bind(this);
@@ -103,7 +102,7 @@ export default class Home extends React.Component {
 
   // posts a line to the db
   postLine(secId, line) {
-    axios({
+    return axios({
       method: 'post',
       url: `/api/sections/${secId}/lines`,
       data: {
@@ -112,15 +111,6 @@ export default class Home extends React.Component {
         section: secId
       }
     })
-      .then((res) => {
-        this.setState({
-          rerender: true
-        });
-        console.log(res);
-        console.log('successfully posted line');
-      }, (err) => {
-        console.log(err);
-      })
   }
 
   // changes state for lines
@@ -180,7 +170,7 @@ export default class Home extends React.Component {
             <button onClick={this.backToAlbums}>Projects</button>
             <button onClick={this.backToSongs}>Songs</button>
             <h3>{this.state.currentSong}</h3>
-            <SongView sections={this.state.sections} lines={this.state.lines} demos={this.state.demos} getLines={this.getLines} postLine={this.postLine} updateLineState={this.updateLineState} getDemos={this.getDemos} songId={this.state.songId} ></SongView>
+            <SongView sections={this.state.sections} lines={this.state.lines} demos={this.state.demos} getLines={this.getLines} postLine={this.postLine} updateLineState={this.updateLineState} getDemos={this.getDemos} songId={this.state.songId}></SongView>
           </div>
         }
       </div>
