@@ -4,9 +4,9 @@ import React from 'react';
 export default function Lines(props) {
   return (
     <div>
-      {props.lines.map((line) => (
-        <div id={line.lineorder}>
-          <p>{line.linecontent}</p>
+      {props.lines.map((line, index) => (
+        <div>
+          <p id={`${line.section}%${line.lineorder}`} onClick={props.selectLine}>{line.linecontent}</p>
         </div>
       ))}
     </div>

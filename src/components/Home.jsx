@@ -17,9 +17,7 @@ export default class Home extends React.Component {
       currentSong: null,
       songId: null,
       sections: null,
-      currentSection: null,
       lines: null,
-      currentLine: null,
       demos: null
     };
     this.getAlbums = this.getAlbums.bind(this);
