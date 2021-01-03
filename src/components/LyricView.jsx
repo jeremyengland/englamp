@@ -1,5 +1,6 @@
 import React from 'react';
 import Lines from './Lines.jsx';
+import LineEditor from './LineEditor.jsx';
 
 export default class LyricView extends React.Component {
   constructor(props) {
@@ -67,10 +68,11 @@ export default class LyricView extends React.Component {
             <p><br></br></p>
           </div>
         ))}
-        {this.state.currentLineOrder &&
+        {this.state.currentLineOrder && this.state.lineObject &&
           <div>
-            <p>Current Section: {this.state.sections[this.state.sectionIdsAndOrders[this.state.currentSectionOrder]].section}</p>
-            <p>Current Line: {this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder].linecontent}</p>
+            <LineEditor postLine={this.props.postLine} selectedLine={this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder]}></LineEditor>
+            <p><b>Current Section:</b> {this.state.sections[this.state.sectionIdsAndOrders[this.state.currentSectionOrder]].section} <b>[{this.state.currentSectionOrder}]</b></p>
+            <p><b>Current Line:</b> {this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder].linecontent} <b>[{this.state.currentLineOrder}]</b></p>
           </div>
         }
       </div>

@@ -1,9 +1,9 @@
 const pool = require('../../../db/connection.js');
 
-// posts a section to the db, given the song's id
-const postLine = async (id, line) => {
+// posts a line to the db, given the section's id
+const postLine = async (secId, line) => {
   try {
-    let res = await pool.query(`INSERT INTO lines(section, lineorder, linecontent) VALUES($1, $2, $3);`, [id, line.lineorder, line.linecontent]);
+    let res = await pool.query(`INSERT INTO lines(section, lineorder, linecontent) VALUES($1, $2, $3);`, [secId, line.lineorder, line.linecontent]);
     return 'success';
   } catch (err) {
     console.error(err);
