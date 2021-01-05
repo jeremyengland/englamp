@@ -7,7 +7,9 @@ import {
   Global,
   AlbumArt,
   SongListDiv,
-  LogoutBtn
+  LogoutBtn,
+  LyricDiv,
+  SongTitleDiv
 } from '../styles/Styles.jsx';
 
 export default class Home extends React.Component {
@@ -181,9 +183,11 @@ export default class Home extends React.Component {
         }
         {this.state.songs && !this.state.sections &&
           <div>
-            <p onClick={this.backToAlbums}><b>  {'<'} Back To Projects</b></p>
+            <p onClick={this.backToAlbums}><b>{'<'} Back To Projects</b></p>
             <SongListDiv>
-              <h1><b><b>{this.state.currentAlbum}</b></b></h1>
+              <SongTitleDiv>
+                <h1><b><b><i>{this.state.currentAlbum}</i></b></b></h1>
+              </SongTitleDiv>
               <AlbumArt src={this.state.currentAlbumArt}></AlbumArt>
               <SongList songs={this.state.songs} getSections={this.getSections}></SongList>
             </SongListDiv>
@@ -191,10 +195,14 @@ export default class Home extends React.Component {
         }
         {this.state.sections &&
           <div>
-            <button onClick={this.backToAlbums}>Projects</button>
-            <button onClick={this.backToSongs}>Songs</button>
-            <h3>{this.state.currentSong}</h3>
-            <SongView sections={this.state.sections} lines={this.state.lines} demos={this.state.demos} getLines={this.getLines} postLine={this.postLine} updateLine={this.updateLine} updateLineState={this.updateLineState} getDemos={this.getDemos} songId={this.state.songId}></SongView>
+            <p onClick={this.backToAlbums}><b>{'<'} Back To Projects</b></p>
+            <p onClick={this.backToSongs}><b>{'<'} Back To Songs</b></p>
+            <LyricDiv>
+              <SongTitleDiv>
+                <h1><i><b>{this.state.currentSong}</b></i></h1>
+              </SongTitleDiv>
+              <SongView sections={this.state.sections} lines={this.state.lines} demos={this.state.demos} getLines={this.getLines} postLine={this.postLine} updateLine={this.updateLine} updateLineState={this.updateLineState} getDemos={this.getDemos} songId={this.state.songId}></SongView>
+            </LyricDiv>
           </div>
         }
       </Global>

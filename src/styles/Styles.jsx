@@ -119,6 +119,39 @@ const SongListDiv = styled.div`
   text-align: center;
 `
 
+const LyricDiv = styled.div`
+  background-color: #EBECF0;
+  margin-left: 550px;
+  margin-right: 580px;
+  padding: 10px;
+  text-align: center;
+`
+
+const SongTitleDiv = styled.div`
+  border: 5px solid #1C1C1C;
+  margin-bottom: 5px;
+`
+
+const IndLine = styled.p`
+  display: inline-block;
+  background-color: #1C1C1C;
+  color: white;
+  padding: 2px;
+  margin: 0px;
+  margin-top: 9px;
+`
+
+const Section = styled.p`
+  font-weight: bold;
+  size: 110%;
+  display: inline-block;
+  background-color: #FFA500;
+  color: black;
+  padding: 2px;
+  margin: 0px;
+  margin-top: 9px;
+`
+
 export {
   Global,
   TitleDiv,
@@ -135,5 +168,9 @@ export {
   AlbumArt,
   AlbumDiv,
   YourProjects,
-  SongListDiv
+  SongListDiv,
+  LyricDiv,
+  SongTitleDiv,
+  IndLine,
+  Section
 }

@@ -2,6 +2,10 @@ import React from 'react';
 import Lines from './Lines.jsx';
 import LineEditor from './LineEditor.jsx';
 import sortLines from './utils/sortLines.js';
+import {
+  SongTitleDiv,
+  Section
+} from '../styles/Styles.jsx';
 
 export default class LyricView extends React.Component {
   constructor(props) {
@@ -72,7 +76,7 @@ export default class LyricView extends React.Component {
       <div>
         {this.state.lines.map((section) => (
           <div>
-            <p><u><b>[{this.state.sections[section[0].section].section}]</b></u></p>
+            <Section><u><b>[{this.state.sections[section[0].section].section}]</b></u></Section>
             <Lines lines={section}
               sections={this.state.sections}
               selectLine={this.selectLine}>
@@ -81,7 +85,8 @@ export default class LyricView extends React.Component {
           </div>
         ))}
         {this.state.currentLineOrder && this.state.currentSectionOrder && this.state.lineObject &&
-          <div>
+          <SongTitleDiv>
+            <h2>Line Editor</h2>
             <LineEditor postLine={this.props.postLine}
               updateLine={this.props.updateLine}
               selectedLine={this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder]}
@@ -99,7 +104,7 @@ export default class LyricView extends React.Component {
               {this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder].linecontent}
               <b> [{this.state.currentLineOrder}]</b>
             </p>
-          </div>
+          </SongTitleDiv>
         }
       </div>
     )
