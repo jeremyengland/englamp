@@ -9,10 +9,11 @@ export default class LineEditor extends React.Component {
     };
     this.onLineChange = this.onLineChange.bind(this);
     this.postTypedLine = this.postTypedLine.bind(this);
+    this.updateLineContent = this.updateLineContent.bind(this);
   }
 
   postTypedLine(e) {
-    console.log(this.props.selectedLine);
+    console.log('post event: ', e.target);
     let selectedLine = this.props.selectedLine;
     let newOrder = (Number(selectedLine.lineorder) + 1)
     this.props.postLine(selectedLine.section, {
@@ -20,7 +21,7 @@ export default class LineEditor extends React.Component {
       lineorder: newOrder,
       section: selectedLine.section
     }).then((res) => {
-      this.props.updateAfterPost(res.data, newOrder, selectedLine.section);
+      this.props.updateLyrics();
       this.setState({
         typedLine: null
       });
@@ -38,6 +39,27 @@ export default class LineEditor extends React.Component {
     })
   }
 
+  // change the content of the selected line
+  updateLineContent(e) {
+    let selectedLine = this.props.selectedLine;
+    this.props.updateLine(selectedLine.section, {
+      id: selectedLine.id,
+      linecontent: this.state.typedLine,
+      lineorder: selectedLine.lineorder,
+      section: selectedLine.section
+    }, "linecontent").then((res) => {
+      this.props.updateLyrics();
+      this.setState({
+        typedLine: ""
+      });
+      console.log(res);
+      console.log('successfully updated line');
+    }, (err) => {
+      console.log(err);
+    })
+    e.preventDefault();
+  }
+
   render() {
     return (
       <div>
@@ -47,8 +69,9 @@ export default class LineEditor extends React.Component {
         <form onSubmit={this.postTypedLine}>
           <label>New line: </label>
           <input type='text' onChange={this.onLineChange} />
-          <input type='submit' value='Submit' />
+          <input type='submit' value='Add New Line' />
         </form>
+        <button onClick={this.updateLineContent}>Update Current Line</button>
       </div>
     )
   }

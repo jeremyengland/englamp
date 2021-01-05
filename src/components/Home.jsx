@@ -3,6 +3,12 @@ import axios from 'axios';
 import AlbumList from './AlbumList.jsx';
 import SongList from './SongList.jsx';
 import SongView from './SongView.jsx';
+import {
+  Global,
+  AlbumArt,
+  SongListDiv,
+  LogoutBtn
+} from '../styles/Styles.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -12,6 +18,7 @@ export default class Home extends React.Component {
       userId: this.props.userId,
       albums: null,
       currentAlbum: null,
+      currentAlbumArt: null,
       albumId: null,
       songs: null,
       currentSong: null,
@@ -47,7 +54,7 @@ export default class Home extends React.Component {
   }
 
   // sends a request to get a user's songs
-  getSongs(albumId, title) {
+  getSongs(albumId, title, artwork) {
     axios({
       method: 'get',
       url: `/api/albums/${albumId}/songs`,
@@ -55,6 +62,7 @@ export default class Home extends React.Component {
       .then((res) => {
         this.setState({
           currentAlbum: title,
+          currentAlbumArt: artwork,
           albumId: albumId,
           songs: res.data
         });
@@ -113,6 +121,20 @@ export default class Home extends React.Component {
     })
   }
 
+  // updates a line's column in the db
+  updateLine(secId, line, column) {
+    return axios({
+      method: 'put',
+      url: `/api/sections/${secId}/lines`,
+      data: {
+        linecontent: line.linecontent,
+        lineorder: line.lineorder,
+        section: secId,
+        column: column
+      }
+    })
+  }
+
   // changes state for lines
   updateLineState(lines) {
     console.log(lines);
@@ -151,18 +173,20 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <Global>
         {this.state.albums && !this.state.songs &&
           <div>
-            <h3>Your Projects:</h3>
             <AlbumList albums={this.state.albums} songs={this.state.songs} getSongs={this.getSongs}></AlbumList>
           </div>
         }
         {this.state.songs && !this.state.sections &&
           <div>
-            <button onClick={this.backToAlbums}>Projects</button>
-            <h3>{this.state.currentAlbum}</h3>
-            <SongList songs={this.state.songs} getSections={this.getSections}></SongList>
+            <p onClick={this.backToAlbums}><b>  {'<'} Back To Projects</b></p>
+            <SongListDiv>
+              <h1><b><b>{this.state.currentAlbum}</b></b></h1>
+              <AlbumArt src={this.state.currentAlbumArt}></AlbumArt>
+              <SongList songs={this.state.songs} getSections={this.getSections}></SongList>
+            </SongListDiv>
           </div>
         }
         {this.state.sections &&
@@ -170,10 +194,10 @@ export default class Home extends React.Component {
             <button onClick={this.backToAlbums}>Projects</button>
             <button onClick={this.backToSongs}>Songs</button>
             <h3>{this.state.currentSong}</h3>
-            <SongView sections={this.state.sections} lines={this.state.lines} demos={this.state.demos} getLines={this.getLines} postLine={this.postLine} updateLineState={this.updateLineState} getDemos={this.getDemos} songId={this.state.songId}></SongView>
+            <SongView sections={this.state.sections} lines={this.state.lines} demos={this.state.demos} getLines={this.getLines} postLine={this.postLine} updateLine={this.updateLine} updateLineState={this.updateLineState} getDemos={this.getDemos} songId={this.state.songId}></SongView>
           </div>
         }
-      </div>
+      </Global>
     )
   }
 }

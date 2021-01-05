@@ -16,10 +16,11 @@ export default class LyricView extends React.Component {
       postedLine: null
     };
     this.selectLine = this.selectLine.bind(this);
-    this.updateAfterPost = this.updateAfterPost.bind(this);
+    this.updateLyrics = this.updateLyrics.bind(this);
   }
 
-  updateAfterPost(newLine, newOrder, section) {
+  // grabs lyrics on mount or after any change
+  updateLyrics() {
     let allSections = {};
     let idsAndOrders = {};
     let allLines = [];
@@ -54,7 +55,7 @@ export default class LyricView extends React.Component {
   }
 
   componentWillMount() {
-    this.updateAfterPost();
+    this.updateLyrics();
   }
 
   selectLine(e) {
@@ -72,15 +73,32 @@ export default class LyricView extends React.Component {
         {this.state.lines.map((section) => (
           <div>
             <p><u><b>[{this.state.sections[section[0].section].section}]</b></u></p>
-            <Lines lines={section} sections={this.state.sections} selectLine={this.selectLine}></Lines>
+            <Lines lines={section}
+              sections={this.state.sections}
+              selectLine={this.selectLine}>
+            </Lines>
             <p><br></br></p>
           </div>
         ))}
         {this.state.currentLineOrder && this.state.currentSectionOrder && this.state.lineObject &&
           <div>
-            <LineEditor postLine={this.props.postLine} selectedLine={this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder]} songId={this.props.songId} updateAfterPost={this.updateAfterPost} postedLine={this.state.postedLine}></LineEditor>
-            <p><b>Current Section:</b> {this.state.sections[this.state.sectionIdsAndOrders[this.state.currentSectionOrder]].section} <b>[{this.state.currentSectionOrder}]</b></p>
-            <p><b>Current Line:</b> {this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder].linecontent} <b>[{this.state.currentLineOrder}]</b></p>
+            <LineEditor postLine={this.props.postLine}
+              updateLine={this.props.updateLine}
+              selectedLine={this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder]}
+              songId={this.props.songId}
+              updateLyrics={this.updateLyrics}
+              postedLine={this.state.postedLine}>
+            </LineEditor>
+            <p>
+              <b>Current Section: </b>
+              {this.state.sections[this.state.sectionIdsAndOrders[this.state.currentSectionOrder]].section}
+              <b> [{this.state.currentSectionOrder}]</b>
+            </p>
+            <p>
+              <b>Current Line: </b>
+              {this.state.lineObject[this.state.currentSectionOrder][this.state.currentLineOrder].linecontent}
+              <b> [{this.state.currentLineOrder}]</b>
+            </p>
           </div>
         }
       </div>

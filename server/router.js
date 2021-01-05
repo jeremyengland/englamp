@@ -13,6 +13,7 @@ const getSections = require('./controllers/sections/getSections.js');
 const postSection = require('./controllers/sections/postSection.js');
 const getLines = require('./controllers/lines/getLines.js');
 const postLine = require('./controllers/lines/postLine.js');
+const updateLine = require('./controllers/lines/updateLine.js')
 const getDemos = require('./controllers/demos/getDemos.js');
 const postDemo = require('./controllers/demos/postDemo.js');
 
@@ -158,6 +159,19 @@ router.post('/api/sections/:secid/lines', async (req, res) => {
   const { secid } = req.params;
   try {
     let post = await postLine(secid, req.body);
+    res.send(post).status(200);
+  } catch (err) {
+    console.error(err);
+    res.status(404);
+    res.end();
+  }
+});
+
+// route for updating a single line
+router.put('/api/sections/:secid/lines', async (req, res) => {
+  const { secid } = req.params;
+  try {
+    let post = await updateLine(secid, req.body, req.body.column);
     res.send(post).status(200);
   } catch (err) {
     console.error(err);
